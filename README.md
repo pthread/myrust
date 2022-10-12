@@ -1,1 +1,1 @@
-# myrust
+# Rust code
