@@ -8,6 +8,7 @@ struct Node {
     content: String,
 }
 
+//Sometimes you want a function that can take both a String and a &str. 
 impl Node {
     fn new(h:String, c:String) -> Self {
         Node { header:h, content:c }
