@@ -31,6 +31,8 @@ impl<'a> Node<'a> {
         }   
     }   
 
+    // Why is the first param &?
+    // ^^^^^^^^^ move occurs because `self.left` has type `Option<Box<Node<'_>>>`, which does not implement the `Copy` trait
     fn dfs (root: &Option<Box<Node<'a>>>, list: &mut Vec<String>) {
         if let Some(x) = root {
             Self::dfs(&x.left, list);
@@ -47,15 +49,39 @@ impl<'a> Node<'a> {
         Self::dfs (&self.right, &mut list);
         println!("{:?}", list);
         println!("==============================");
+    }
+
+    pub fn search(&self, val: &'a str) -> Option<&'a str> {
+        Some(val)
     }   
 }
 
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_btree() -> Result<(), String> {
+        let result = 200;
+        if result == 100 {
+            Ok(())
+        } else {
+            Err(String::from("should be 100"))
+        }
+        //assert_eq!(result, 100, "should be 100");
+    }
+}
+
+
 fn main() {
     println!("Hello, BinaryTree!");
-    let mut node: Node = Node::new("hello");
-    node.insert ("world");
-    node.insert ("rust");
-    node.insert ("book");
-    node.dump();
+    let mut btree: Node = Node::new("hello");
+    btree.insert ("world");
+    btree.insert ("rust");
+    btree.insert ("book");
+    btree.dump();
+
+    let result = btree.search("hello");
+    println!("{:?}", result);
+    let result2 = btree.search("rust");
+    println!("{:?}", result2);
 }
 
